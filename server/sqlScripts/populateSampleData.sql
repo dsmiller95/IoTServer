@@ -1,11 +1,6 @@
 use birdRecords;
 
 
-drop table if exists temp_info; 
-create table temp_info ( 
-	temp float, 
-	measurement_time bigint);
-
 insert into temp_info
 	(temp, measurement_time)
     values
