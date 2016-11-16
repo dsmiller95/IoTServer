@@ -12,6 +12,9 @@ import { routing } from './app.routing';
 import { feedReducer } from './store/feed/feed.reducer';
 import { FeedEffects } from './store/feed/feed.effects';
 
+import { tempReducer } from './store/temp/temp.reducer';
+import { TempEffects } from './store/temp/temp.effects';
+
 @NgModule({
   declarations: [
     AppComponent
@@ -21,7 +24,8 @@ import { FeedEffects } from './store/feed/feed.effects';
     routing,
     FormsModule,
     StoreModule.provideStore({
-      feed: feedReducer
+      feed: feedReducer,
+      temps: tempReducer
     }),
     StoreDevtoolsModule.instrumentStore({
       monitor: useLogMonitor({
@@ -30,6 +34,7 @@ import { FeedEffects } from './store/feed/feed.effects';
       })
     }),
     EffectsModule.run(FeedEffects),
+    EffectsModule.run(TempEffects),
     StoreLogMonitorModule,
     HttpModule
   ],

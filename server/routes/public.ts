@@ -16,7 +16,6 @@ function getConnection(){
 const publicRouter: Router = Router();
 
 publicRouter.get('/simple', (request: Request, response: Response) => {
-
 	setTimeout(function(){
 
 	  response.json({
@@ -45,7 +44,7 @@ publicRouter.post('/record', upload.single(), (req: Request, res: Response, next
 		let err = new Error('Not enough information');
 		return next(err);
 	}
-	
+
 	var connection = getConnection();
 
 	connection.connect();
