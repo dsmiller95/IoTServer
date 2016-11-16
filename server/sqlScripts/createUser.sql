@@ -1,6 +1,6 @@
 CREATE USER 'default'@'localhost' IDENTIFIED BY 'secret';
-GRANT INSERT ON birdrecords.* TO 'default'@'localhost';
-GRANT DELETE ON birdrecords.* TO 'default'@'localhost';
-GRANT SELECT ON birdrecords.* TO 'default'@'localhost';
-GRANT UPDATE ON birdrecords.* TO 'default'@'localhost';
+GRANT INSERT ON birdRecords.* TO 'default'@'localhost';
+GRANT DELETE ON birdRecords.* TO 'default'@'localhost';
+GRANT SELECT ON birdRecords.* TO 'default'@'localhost';
+GRANT UPDATE ON birdRecords.* TO 'default'@'localhost';
 FLUSH PRIVILEGES;
