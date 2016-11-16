@@ -16,8 +16,7 @@
     "_server:run": "tsc -p ./server && concurrently \"tsc -w -p ./server\" \"nodemon dist/server/bin/www.js\" ",
     "_server:prod": "node dist/server/bin/www.js",
     "_server:build": "tsc -p ./server",
-    "serve": "ng serve --host 0.0.0.0 --proxy-config proxy.conf.json",
-    "postinstall": "npm run build"
+    "serve": "ng serve --host 0.0.0.0 --proxy-config proxy.conf.json"
   },
   "author": "Vlado Tešanović",
   "repository": {
