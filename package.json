@@ -55,6 +55,7 @@
     "express": "^4.13.4",
     "express-jwt": "^3.3.0",
     "jsonwebtoken": "^5.7.0",
+    "mqtt": "^2.1.1",
     "multer": "^1.2.0",
     "mysql": "^2.12.0",
     "node-uuid": "^1.4.7",

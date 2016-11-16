@@ -9,7 +9,11 @@ import { protectedRouter } from './routes/protected';
 import { publicRouter } from './routes/public';
 import { feedRouter } from './routes/feed';
 
+import { mqttInit } from './handlers/mqttDatabase';
+
 const app: express.Application = express();
+
+var mqttHandler = new mqttInit();
 
 app.disable('x-powered-by');
 

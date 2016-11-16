@@ -1,16 +1,14 @@
 import { Router, Response, Request, NextFunction } from 'express';
 
+import { connectionObj } from '../config';
+
 var multer  = require('multer')
 var upload = multer({ dest: 'uploads/' })
 
 var mysql = require('mysql');
 
 function getConnection(){
-	return mysql.createConnection({
-		host: 'localhost',
-		user: 'default',
-		password: 'secret'
-	});
+	return mysql.createConnection(connectionObj);
 }
 
 const publicRouter: Router = Router();
