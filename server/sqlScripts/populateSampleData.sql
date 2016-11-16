@@ -33,7 +33,7 @@ insert into temp_info
 insert into temp_info
 	(temp, measurement_time)
     values
-    (48.7, 1479193060000);
+    (49.02, 1479195000000);
     
 select *
 from temp_info
