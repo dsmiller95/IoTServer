@@ -14,6 +14,7 @@
     "build": "ng build --prod --output-path=dist/client && npm run _server:build",
     "_server:run": "tsc -p ./server && concurrently \"tsc -w -p ./server\" \"nodemon dist/server/bin/www.js\" ",
     "_server:build": "tsc -p ./server",
+    "serve": "ng serve --proxy-config proxy.conf.json",
     "postinstall": "npm run build"
   },
   "author": "Vlado Tešanović",
