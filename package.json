@@ -7,13 +7,13 @@
   "angular-cli": {},
   "scripts": {
     "start": "concurrently --kill-others \"ng serve --host 0.0.0.0 --proxy-config proxy.conf.json\" \"npm run _server:run\"",
-    "start:prod": "concurrently --kill-others \"ng serve --prod --proxy-config proxy.conf.json\" \"npm run _server:run\"",
     "lint": "tslint \"src/**/*.ts\"",
     "test": "ng test",
     "pree2e": "webdriver-manager update",
     "e2e": "protractor",
     "build": "ng build --prod --output-path=dist/client && npm run _server:build",
     "_server:run": "tsc -p ./server && concurrently \"tsc -w -p ./server\" \"nodemon dist/server/bin/www.js\" ",
+    "_server:prod": "tsc -p ./server && concurrently \"tsc -w -p ./server\" \"node dist/server/bin/www.js\" ",
     "_server:build": "tsc -p ./server",
     "serve": "ng serve --host 0.0.0.0 --proxy-config proxy.conf.json",
     "postinstall": "npm run build"
