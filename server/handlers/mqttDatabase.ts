@@ -36,8 +36,11 @@ class mqttInit{
 			}
 			
 
-			if(!(obj.temp && obj.time))
+			if(!(obj.temp))
 				return;
+			}
+			if(!(obj.time)){
+				obj.time = (new Date()).getTime();
 			}
 
 
@@ -50,6 +53,7 @@ class mqttInit{
 				if (err){
 					console.log("mysql error from mqtt");
 					console.log({error: err});
+					client.publish('/dantest/info/reporting', JSON.stringify({error: err}));
 				}else{
 					client.publish('/dantest/info/reporting', JSON.stringify({success: rows}));
 				}
