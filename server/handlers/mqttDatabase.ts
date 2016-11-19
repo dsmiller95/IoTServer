@@ -25,42 +25,48 @@ class mqttInit{
 		client.on('message', (topic, message) => {  
 			if(topic === '/dantest/info/temp') {
 
-			console.log(message.toString());
-			try{
-				var obj = JSON.parse(message.toString());
-			}catch(exception){
-				console.log("Error parsing mqtt message:");
-				console.log(topic, message.toString());
-				console.log(exception);
-				return;
-			}
-			
-
-			if(!(obj.temp))
-				return;
-			}
-			if(!(obj.time)){
-				obj.time = (new Date()).getTime();
-			}
-
-
-			var connection = getConnection();
-
-			connection.connect();
-			connection.query('INSERT INTO birdRecords.temp_info ' + 
-				'(temp, measurement_time) values' +
-				'(' + obj.temp + ', ' + obj.time + ')', function (err, rows, fields) {
-				if (err){
-					console.log("mysql error from mqtt");
-					console.log({error: err});
-					client.publish('/dantest/info/reporting', JSON.stringify({error: err}));
-				}else{
-					client.publish('/dantest/info/reporting', JSON.stringify({success: rows}));
+				console.log(message.toString());
+				try{
+					var obj = JSON.parse(message.toString());
+				}catch(exception){
+					console.log("Error parsing mqtt message:");
+					console.log(topic, message.toString());
+					console.log(exception);
+					return;
 				}
-			});
-			connection.end();
+
+				if(!('temp' in obj) || obj.temp == undefined || obj.temp == null){
+					console.warn("malformed temp data");
+					console.warn(obj);
+					client.publish('/dantest/info/reporting', "Malformed temperature data: " + message.toString());
+					return;
+				}
+				if(!(obj.time)){
+					//if no time provided, assume current time
+					obj.time = (new Date()).getTime();
+				}
+				if(obj.time < 0){
+					//if time is negative, assume relative to current time
+					obj.time = (new Date()).getTime() + obj.time;
+				}
 
 
+				var connection = getConnection();
+
+				connection.connect();
+				connection.query('INSERT INTO birdRecords.temp_info ' + 
+					'(temp, measurement_time) values' +
+					'(' + obj.temp + ', ' + obj.time + ')', function (err, rows, fields) {
+					if (err){
+						console.log("mysql error from mqtt");
+						console.log({error: err});
+						client.publish('/dantest/info/reporting', JSON.stringify({error: err}));
+					}else{
+						client.publish('/dantest/info/reporting', JSON.stringify({success: rows}));
+					}
+				});
+				connection.end();
+			}
 		});
 	}
 }
