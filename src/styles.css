@@ -13,3 +13,11 @@
 .field.error > * {
   background: lightcoral;
 }
+
+dygraph > * {
+	position: absolute;
+	left: 50px;
+	right: 50px;
+	top: 200px;
+	bottom: 50px; 
+}

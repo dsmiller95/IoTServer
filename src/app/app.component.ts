@@ -12,12 +12,12 @@ import 'rxjs/add/operator/map';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'app works!';
+  title = 'Dan\'s IoT Monitoring';
   observable$: Observable<{}>;
 
   constructor(http: Http) {
-    this.observable$ = http
+    /*this.observable$ = http
       .get('/api/public/simple')
-      .map((response: Response) => response.json());
+      .map((response: Response) => response.json());*/
   }
 }
