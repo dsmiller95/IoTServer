@@ -25,6 +25,8 @@ export class DygraphCompenent implements AfterViewInit {
 
 	private dygraph: any;
 
+	private timeRange: number = 14400000; //4 hours in ms
+
 
 	public ngAfterViewInit() {
 		this.initDygraph();
@@ -52,7 +54,7 @@ export class DygraphCompenent implements AfterViewInit {
 				var t = new Date();
 				this.dygraph.updateOptions({
 					file: newData,
-					dataWindow: [t.getTime() - 3600000, t.getTime()]
+					dataWindow: [t.getTime() - this.timeRange, t.getTime()]
 				});
 			}
 		}
@@ -69,7 +71,7 @@ export class DygraphCompenent implements AfterViewInit {
 				title: this.title,
 				//showRoller: true,
 				xlabel: '<br/><br/>Time',
-				dateWindow: [t.getTime() - 3600000, t.getTime()],
+				dateWindow: [t.getTime() - this.timeRange, t.getTime()],
 				isZoomedIgnoreProgrammaticZoom: true,
 				rightGap: 20,
 				axes: {
