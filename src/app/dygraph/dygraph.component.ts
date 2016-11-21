@@ -18,7 +18,10 @@ export class DygraphCompenent implements AfterViewInit {
 	public title:string;
 
 	@Input()
-	public data: (number | Date)[][] = [[0, 0], [1, 0]];
+	public data: number[][] = [[0, 0], [1, 0]];
+
+	@Input()
+	public maximumSpace: (number) = undefined;
 
 	private dygraph: any;
 
@@ -30,9 +33,25 @@ export class DygraphCompenent implements AfterViewInit {
 	public ngOnChanges(changes: SimpleChanges){
 		if('data' in changes){
 			if(this.dygraph){
+				var newData: [Date, number][] = [ [new Date(this.data[0][0]), this.data[0][1]] ];
+				if(this.maximumSpace != undefined){
+					for(var i = 1; i < this.data.length; i++){
+						if(this.data[i][0] - this.data[i - 1][0] >= this.maximumSpace){
+							//this.data.splice(i, 0, [this.data[i-1][0] + 1, NaN], [this.data[i][0]-1, NaN]);
+							//i += 2; //skip those 2 that were just inserted
+							newData.push([new Date(this.data[i-1][0] + 1), NaN]);
+							newData.push([new Date(this.data[i][0] - 1), NaN]);
+						}
+						newData.push([new Date(this.data[i][0]), this.data[i][1]]);
+					}
+				}
+				/*for(var i = 0; i < this.data.length; i++){
+					this.data[i][0] = new Date(this.data[i][0]);
+				}*/
+
 				var t = new Date();
 				this.dygraph.updateOptions({
-					file: this.data,
+					file: newData,
 					dataWindow: [t.getTime() - 3600000, t.getTime()]
 				});
 			}

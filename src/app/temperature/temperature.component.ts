@@ -15,6 +15,7 @@ export class TemperatureComponent {
 
 	public temps: Observable<[{time: number, temp: number}]>;
 	public tempData: number[][] = [[0, 0]];
+	public maxDataGap: number = 1800000; //30 * 60 * 1000; 30 minutes
 
 	public graphTitle: string;
 
@@ -31,7 +32,7 @@ export class TemperatureComponent {
 			}*/
 			var data = [];
 			for(var i = 0; i < value.length; i++){
-				data.push([new Date(value[i].time), value[i].temp]);
+				data.push([value[i].time, value[i].temp]);
 			}
 			this.tempData = data;
 		});
