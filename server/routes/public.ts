@@ -27,7 +27,7 @@ publicRouter.get('/records', (req: Request, res: Response) => {
 	var connection = getConnection();
 
 	connection.connect();
-	connection.query('SELECT * FROM birdRecords.temp_info ORDER BY measurement_time', function (err, rows, fields) {
+	connection.query('SELECT temp, measurement_time as time FROM birdRecords.temp_info ORDER BY measurement_time', function (err, rows, fields) {
 		if (err){
 			res.json({error: err});
 		}else{

@@ -13,8 +13,6 @@ class mqttInit{
 	constructor(){
 		const client = mqtt.connect('mqtt://broker.hivemq.com');
 
-		console.log("loading mqttDatabase");
-
 		var garageState = ''  
 		var connected = false
 
