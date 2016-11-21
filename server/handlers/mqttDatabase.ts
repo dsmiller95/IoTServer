@@ -11,17 +11,21 @@ const mqtt = require('mqtt')  ;
 
 class mqttInit{
 	constructor(){
-		const client = mqtt.connect('mqtt://broker.hivemq.com');
+		const client = mqtt.connect({servers: [
+				{host: 'localhost', port: 1883},
+				{host: '192.168.1.121', port:1883}
+			]});
 
 		var garageState = ''  
 		var connected = false
 
 		client.on('connect', () => {  
-		  client.subscribe('/dantest/info/temp')
+		  client.subscribe('/info/temp');
+		  console.log("connected to mqtt");
 		});
 
-		client.on('message', (topic, message) => {  
-			if(topic === '/dantest/info/temp') {
+		client.on('message', (topic, message) => {
+			if(topic === '/info/temp') {
 
 				console.log(message.toString());
 				try{
@@ -36,7 +40,7 @@ class mqttInit{
 				if(!('temp' in obj) || obj.temp == undefined || obj.temp == null){
 					console.warn("malformed temp data");
 					console.warn(obj);
-					client.publish('/dantest/info/reporting', "Malformed temperature data: " + message.toString());
+					client.publish('/info/reporting', "Malformed temperature data: " + message.toString());
 					return;
 				}
 				if(!(obj.time)){
@@ -58,9 +62,9 @@ class mqttInit{
 					if (err){
 						console.log("mysql error from mqtt");
 						console.log({error: err});
-						client.publish('/dantest/info/reporting', JSON.stringify({error: err}));
+						client.publish('/info/reporting', JSON.stringify({error: err}));
 					}else{
-						client.publish('/dantest/info/reporting', JSON.stringify({success: rows}));
+						client.publish('/info/reporting', JSON.stringify({success: rows}));
 					}
 				});
 				connection.end();
