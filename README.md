@@ -16,10 +16,9 @@ loc<img width="150" src="https://i.cloudup.com/zfY6lL7eFa-3000x3000.png" />
 
 Expectations:
 
-* There is an MQTT server running on localhost
-..* Server listens on /info/temp and reports back on /info/reporting channels
-* There is a MySQL server running on localhost
-* Connection configuration for both can be found in server/config.ts
+- There is an MQTT and MySQL server running on localhost
+  - MQTT Server listens on /info/temp and reports back on /info/reporting channels
+  - Connection configuration for both can be found in server/config.ts
 
 ```bash
 git clone https://github.com/dsmiller95/IoTServer
