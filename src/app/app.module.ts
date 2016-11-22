@@ -6,7 +6,8 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { StoreLogMonitorModule, useLogMonitor } from '@ngrx/store-log-monitor';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
-import { AlertModule } from 'ng2-bootstrap/ng2-bootstrap';
+
+//import { AlertModule } from 'ng2-bootstrap/ng2-bootstrap';
 
 import { AppComponent } from './app.component';
 import { routing } from './app.routing';
@@ -21,7 +22,7 @@ import { TempEffects } from './store/temp/temp.effects';
     AppComponent
   ],
   imports: [
-    AlertModule,
+    //AlertModule,
     BrowserModule,
     routing,
     FormsModule,

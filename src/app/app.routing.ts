@@ -3,7 +3,7 @@ import { ModuleWithProviders } from '@angular/core';
 
 const routes: Route[] = [
   { path: '', pathMatch: 'full', redirectTo: 'temperature'},
-  { loadChildren: 'app/dashboard/dashboard.module#DashboardModule', path: 'dashboard' },
+  { loadChildren: 'app/about/about.module#AboutModule', path: 'about' },
   { loadChildren: 'app/temperature/temperature.module#TemperatureModule', path: 'temperature' }
 ];
 

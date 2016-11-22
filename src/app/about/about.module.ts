@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
-import { DashboardComponent } from './dashboard.component';
+import { AboutComponent } from './about.component';
 import { CommonModule } from '@angular/common';
-import { routing } from './dashboard.routing';
+import { routing } from './about.routing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
@@ -12,10 +12,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     routing
   ],
   declarations: [
-    DashboardComponent
+    AboutComponent
   ],
   bootstrap: [
-    DashboardComponent
+    AboutComponent
   ]
 })
-export class DashboardModule {}
+export class AboutModule {}

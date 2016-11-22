@@ -5,10 +5,10 @@ import { ADD_FEED, REMOVE_FEED } from '../store/feed/feed.actions';
 import { Observable } from 'rxjs';
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: 'dashboard.component.html'
+  selector: 'app-about',
+  templateUrl: 'about.component.html'
 })
-export class DashboardComponent {
+export class AboutComponent {
   form: FormGroup;
 
   feeds$: Observable<{}>;

@@ -38,7 +38,7 @@ export class TemperatureComponent {
 		});
 
 
-		this.graphTitle = "Temperature";
+		//this.graphTitle = "Temperature";
 
 		/*http.get('/api/public/records')
 		.map((response: Response) => response.json())
