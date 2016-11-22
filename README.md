@@ -1,7 +1,18 @@
-<img width="150" src="https://i.cloudup.com/zfY6lL7eFa-3000x3000.png" />
+loc<img width="150" src="https://i.cloudup.com/zfY6lL7eFa-3000x3000.png" />
 <img width="50" src="https://angular.io/resources/images/logos/angular2/angular.svg" />
 
-## Angular2 Express Starter
+## Angular2 Express IoT management project
+
+- Forked from [Angular2 Express Starter](https://github.com/vladotesanovic/angular2-express-starter)
+
+
+
+
+
+
+
+---
+
 
 - Angular 2 ( 2.1 release )
 - ExpressJS ( 4.x - with compression )
