@@ -9,3 +9,7 @@ export const connectionObj = {
 		password: 'secret'
 	};
 
+export const mqttServers = [
+				{host: 'localhost', port: 1883},
+				{host: '192.168.1.121', port:1883}
+			];

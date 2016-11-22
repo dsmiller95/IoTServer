@@ -4,29 +4,26 @@ loc<img width="150" src="https://i.cloudup.com/zfY6lL7eFa-3000x3000.png" />
 ## Angular2 Express IoT management project
 
 - Forked from [Angular2 Express Starter](https://github.com/vladotesanovic/angular2-express-starter)
-
-
-
-
-
-
-
----
-
-
-- Angular 2 ( 2.1 release )
-- ExpressJS ( 4.x - with compression )
-- Webpack ( angular-cli )
-- Redux ( NgRx/Store - with server calls)
-
-[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
+- MySQL
+- RabbitMQ
+- Angular 2
+- ExpressJS
+- Webpack
+- Redux
 
 
 ## Install / Development
 
+Expectations:
+
+* There is an MQTT server running on localhost
+..* Server listens on /info/temp and reports back on /info/reporting channels
+* There is a MySQL server running on localhost
+* Connection configuration for both can be found in server/config.ts
+
 ```bash
-git clone https://github.com/vladotesanovic/angular2-express-starter
-cd angular2-express-starter
+git clone https://github.com/dsmiller95/IoTServer
+cd IoTServer
 
 # Install dependencies
 npm install

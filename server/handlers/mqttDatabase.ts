@@ -1,4 +1,4 @@
-import { connectionObj } from '../config';
+import { connectionObj, mqttServers } from '../config';
 
 
 var mysql = require('mysql');
@@ -11,10 +11,7 @@ const mqtt = require('mqtt')  ;
 
 class mqttInit{
 	constructor(){
-		const client = mqtt.connect({servers: [
-				{host: 'localhost', port: 1883},
-				{host: '192.168.1.121', port:1883}
-			]});
+		const client = mqtt.connect({servers: mqttServers});
 
 		var garageState = ''  
 		var connected = false
