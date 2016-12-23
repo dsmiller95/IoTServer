@@ -15,7 +15,7 @@ export class TempEffects {
   addFeed$ = this.actions$
     .ofType(REFRESH_TEMPS)
     .switchMap((action: Action) => {
-      return this.http.get('/api/public/records', action.payload)
+      return this.http.get('/api/temps/records', action.payload)
         .catch(() => Observable.of(({ type: REFRESH_TEMPS_FAIL })))
         .map((response: Response) => response.json())
         .map((response) => ({type: REFRESH_TEMPS_SUCCESS, payload: response}));

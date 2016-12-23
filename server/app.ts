@@ -8,6 +8,7 @@ import { loginRouter } from './routes/login';
 import { protectedRouter } from './routes/protected';
 import { publicRouter } from './routes/public';
 import { feedRouter } from './routes/feed';
+import { tempData } from './routes/tempData';
 
 import { mqttInit } from './handlers/mqttDatabase';
 
@@ -32,7 +33,9 @@ app.use(cors({
 app.use('/api/secure', protectedRouter);
 app.use('/api/login', loginRouter);
 app.use('/api/public', publicRouter);
+app.use('/api/temps', tempData);
 app.use('/api/feed', feedRouter);
+
 
 if (app.get('env') === 'production') {
 

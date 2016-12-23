@@ -50,7 +50,7 @@ export class TemperatureComponent {
 			payload: {}
 		});
 
-		Observable.interval(5000).subscribe((count) => {
+		Observable.interval(30000).subscribe((count) => {
 			this.store.dispatch({
 				type: REFRESH_TEMPS,
 				payload: {}

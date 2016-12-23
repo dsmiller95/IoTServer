@@ -2,33 +2,33 @@ import { Router, Response, Request, NextFunction } from 'express';
 
 import { connectionObj } from '../config';
 
-/*var multer  = require('multer')
-var upload = multer({ dest: 'uploads/' })
+var multer  = require('multer');
+var upload = multer({ dest: 'uploads/' });
 
 var mysql = require('mysql');
 
 function getConnection(){
 	return mysql.createConnection(connectionObj);
-}*/
-
-const publicRouter: Router = Router();
-
-publicRouter.get('/simple', (request: Request, response: Response) => {
-	setTimeout(function(){
-
-	  response.json({
-	    title: 'Greetings.',
-	    text: 'Hello Angular 2'
-	  });
-	}, 1000);
-});
+}
 
 
-/*publicRouter.get('/records', (req: Request, res: Response) => {
+const tempData: Router = Router();
+
+tempData.get('/records', (req: Request, res: Response) => {
 	var connection = getConnection();
 
+	var oldestDate = req.query.oldest || ((new Date()).getTime() - (1000 * 60 * 60 * 24));
+
+	console.log(oldestDate);
+
+
 	connection.connect();
-	connection.query('SELECT temp, measurement_time as time FROM birdRecords.temp_info ORDER BY measurement_time', function (err, rows, fields) {
+
+	connection.query(`
+		SELECT temp, measurement_time as time
+		FROM birdRecords.temp_info
+		WHERE measurement_time > ${oldestDate}
+		ORDER BY measurement_time`, function (err, rows, fields) {
 		if (err){
 			res.json({error: err});
 		}else{
@@ -38,11 +38,14 @@ publicRouter.get('/simple', (request: Request, response: Response) => {
 	connection.end();
 });
 
-publicRouter.post('/record', upload.single(), (req: Request, res: Response, next: NextFunction) => {
+tempData.post('/record', upload.single(), (req: Request, res: Response, next: NextFunction) => {
 	if(!(req.body.time && req.body.temp)){
 		let err = new Error('Not enough information');
 		return next(err);
 	}
+
+	console.log(req.body.temp);
+	console.log(req.body.time);
 
 	var connection = getConnection();
 
@@ -58,5 +61,5 @@ publicRouter.post('/record', upload.single(), (req: Request, res: Response, next
 	});
 	connection.end();
 });
-*/
-export { publicRouter }
+
+export { tempData }
