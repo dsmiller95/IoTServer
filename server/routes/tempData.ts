@@ -19,7 +19,7 @@ tempData.get('/records', (req: Request, res: Response) => {
 
 	var oldestDate = req.query.oldest || ((new Date()).getTime() - (1000 * 60 * 60 * 24));
 
-	console.log(oldestDate);
+	//console.log(oldestDate);
 
 
 	connection.connect();
@@ -43,9 +43,6 @@ tempData.post('/record', upload.single(), (req: Request, res: Response, next: Ne
 		let err = new Error('Not enough information');
 		return next(err);
 	}
-
-	console.log(req.body.temp);
-	console.log(req.body.time);
 
 	var connection = getConnection();
 

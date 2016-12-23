@@ -19,4 +19,4 @@
 </table>
 
 
-<dygraph [title]="graphTitle" [data]="tempData" [maximumSpace]="maxDataGap"></dygraph>
+<dygraph [title]="graphTitle" [data]="tempData" [maximumSpace]="maxDataGap" (onZoom)="graphZoomed($event)"></dygraph>

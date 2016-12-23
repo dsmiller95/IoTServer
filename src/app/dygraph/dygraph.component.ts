@@ -1,4 +1,5 @@
-import { Component, Input, ViewChild, ElementRef, AfterViewInit, SimpleChanges } from '@angular/core';
+import { Component, Input, ViewChild, ElementRef, AfterViewInit, SimpleChanges,
+	Output, EventEmitter } from '@angular/core';
 import { Store } from '@ngrx/store';
 
 import { Http, Response } from '@angular/http';
@@ -23,10 +24,18 @@ export class DygraphCompenent implements AfterViewInit {
 	@Input()
 	public maximumSpace: (number) = undefined;
 
+	@Output()
+	public onZoom: EventEmitter<any>;
+
 	private dygraph: any;
 
 	private timeRange: number = 14400000; //4 hours in ms
 
+
+
+	constructor(private http: Http, private store: Store<{}>){
+ 		this.onZoom = new EventEmitter();
+	}
 
 	public ngAfterViewInit() {
 		this.initDygraph();
@@ -35,29 +44,23 @@ export class DygraphCompenent implements AfterViewInit {
 	public ngOnChanges(changes: SimpleChanges){
 		if('data' in changes){
 			if(this.dygraph){
-				var newData: [Date, number][] = [ [new Date(this.data[0][0]), this.data[0][1]] ];
-				if(this.maximumSpace != undefined){
-					for(var i = 1; i < this.data.length; i++){
-						if(this.data[i][0] - this.data[i - 1][0] >= this.maximumSpace){
-							//this.data.splice(i, 0, [this.data[i-1][0] + 1, NaN], [this.data[i][0]-1, NaN]);
-							//i += 2; //skip those 2 that were just inserted
-							newData.push([new Date(this.data[i-1][0] + 1), NaN]);
-							newData.push([new Date(this.data[i][0] - 1), NaN]);
-						}
-						newData.push([new Date(this.data[i][0]), this.data[i][1]]);
-					}
-				}
-				/*for(var i = 0; i < this.data.length; i++){
-					this.data[i][0] = new Date(this.data[i][0]);
-				}*/
+				var newData = this.convertToDates(this.data, this.maximumSpace);
 
 				var t = new Date();
 				this.dygraph.updateOptions({
 					file: newData,
-					dataWindow: [t.getTime() - this.timeRange, t.getTime()]
+					//dataWindow: [t.getTime() - this.timeRange, t.getTime()]
 				});
 			}
 		}
+	}
+
+	private dygraphZoomed(minDate: number, maxDate: number, ranges: number[][]){
+		this.onZoom.emit({
+			minDate: minDate,
+			maxDate: maxDate,
+			ranges: ranges
+		});
 	}
 
 	private initDygraph(){
@@ -85,38 +88,31 @@ export class DygraphCompenent implements AfterViewInit {
 							return (x.toFixed(1) + '°C');
 						}
 					}
-				}
+				},
+				zoomCallback: (min, max, range) => {this.dygraphZoomed(min, max, range)}
 			});
 	}
 
-	constructor(private http: Http, private store: Store<{}>){
 
-		//this.temps = store.select('temps');
-		/*http.get('/api/public/records')
-		.map((response: Response) => response.json())
-		.subscribe(response => {
-			this.temps = response;
-		});*/
-
-		/*this.data = [];
-		var t = new Date();
-		for (var i = 28; i >= 0; i--) {
-			var x = new Date(t.getTime() - i * 1000);
-			this.data.push([x, Math.random()]);
-		}*/
-
-
-		/*Observable.interval(1000).subscribe((count) => {
-			console.log(count);
-			var x = new Date();  // current time
-		    var y = Math.random();
-		    this.data.push([x, y]);
-		    
-		    //console.log(JSON.stringify(this.data));
-		    this.dygraph.updateOptions( {
-		    	'file': this.data,
-		        'dateWindow': [x.getTime() - 60000, x.getTime()]
-		    } );
-		});*/
+	/**
+	 * Take an array of data points as raw numbers and convert the ms to a Date object
+	 * In addition; insert a point as NaN if the distance between any two points is greater than spliceDist
+	 * to cause a break in the graph at that point
+	 */
+	private convertToDates(data: number[][], spliceDist: number) : [Date, number][]{
+		var newData: [Date, number][] = [ [new Date(data[0][0]), data[0][1]] ];
+		if(spliceDist != undefined){
+			for(var i = 1; i < data.length; i++){
+				if(data[i][0] - data[i - 1][0] >= spliceDist){
+					//this.data.splice(i, 0, [this.data[i-1][0] + 1, NaN], [this.data[i][0]-1, NaN]);
+					//i += 2; //skip those 2 that were just inserted
+					newData.push([new Date(data[i-1][0] + 1), NaN]);
+					newData.push([new Date(data[i][0] - 1), NaN]);
+				}
+				newData.push([new Date(data[i][0]), data[i][1]]);
+			}
+		}
+		return newData;
 	}
+
 }

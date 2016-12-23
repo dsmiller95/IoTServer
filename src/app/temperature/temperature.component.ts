@@ -18,10 +18,11 @@ export class TemperatureComponent {
 	public maxDataGap: number = 1800000; //30 * 60 * 1000; 30 minutes
 
 	public graphTitle: string;
+	//public graphZoomEvent: (minDate: number, maxDate: number, ranges: number[][]) => void;
+
 
 	constructor(private http: Http, private store: Store<{}>){
 		this.temps = store.select('temps') as Observable<[{time: number, temp:number}]>;
-
 
 		this.temps.subscribe((value) => {
 			if(value.length <= 0){
@@ -30,6 +31,7 @@ export class TemperatureComponent {
 			/*while(this.tempData.length > 0){
 				this.tempData.pop();
 			}*/
+
 			var data = [];
 			for(var i = 0; i < value.length; i++){
 				data.push([value[i].time, value[i].temp]);
@@ -37,18 +39,11 @@ export class TemperatureComponent {
 			this.tempData = data;
 		});
 
-
-		//this.graphTitle = "Temperature";
-
-		/*http.get('/api/public/records')
-		.map((response: Response) => response.json())
-		.subscribe(response => {
-			this.temps = response;
-		});*/
 		this.store.dispatch({
 			type: REFRESH_TEMPS,
 			payload: {}
 		});
+
 
 		Observable.interval(30000).subscribe((count) => {
 			this.store.dispatch({
@@ -59,5 +54,7 @@ export class TemperatureComponent {
 
 	}
 
-
+	public graphZoomed(event: {minDate: number, maxDate: number, ranges: number[][]}){
+		console.log(event);
+	}
 }
