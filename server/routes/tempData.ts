@@ -17,8 +17,10 @@ const tempData: Router = Router();
 tempData.get('/records', (req: Request, res: Response) => {
 	var connection = getConnection();
 
-	var oldestDate = req.query.oldest || ((new Date()).getTime() - (1000 * 60 * 60 * 24));
-
+	var oldestDate = ((new Date()).getTime() - (1000 * 60 * 60 * 24));
+	if(req.query.oldest && req.query.oldest > 0){
+		oldestDate = req.query.oldest;
+	}
 	//console.log(oldestDate);
 
 

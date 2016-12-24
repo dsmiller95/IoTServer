@@ -5,7 +5,7 @@ import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 
 
-import { REFRESH_TEMPS } from '../store/temp/temp.actions';
+import { REFRESH_TEMPS, NEW_TEMPS } from '../store/temp/temp.actions';
 
 @Component({
   selector: 'app-temperature',
@@ -56,5 +56,12 @@ export class TemperatureComponent {
 
 	public graphZoomed(event: {minDate: number, maxDate: number, ranges: number[][]}){
 		console.log(event);
+
+		this.store.dispatch({
+			type: NEW_TEMPS,
+			payload: {
+				oldest: event.minDate
+			}
+		});
 	}
 }

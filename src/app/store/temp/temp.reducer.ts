@@ -1,5 +1,5 @@
 import { Action, ActionReducer } from '@ngrx/store';
-import { REFRESH_TEMPS_SUCCESS } from './temp.actions';
+import { TEMPS_SUCCESS } from './temp.actions';
 
 export interface IFeed {
   id: string;
@@ -12,7 +12,7 @@ export const tempReducer: ActionReducer<IFeed[]> = (state: Array<IFeed> = [], ac
 
   switch (action.type) {
 
-    case REFRESH_TEMPS_SUCCESS:
+    case TEMPS_SUCCESS:
 
       return action.payload;
 
