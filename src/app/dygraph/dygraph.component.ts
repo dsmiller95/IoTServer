@@ -45,7 +45,7 @@ export class DygraphCompenent implements AfterViewInit {
 		if('data' in changes){
 			if(this.dygraph){
 				var newData = this.convertToDates(this.data, this.maximumSpace);
-				
+
 				var t = new Date();
 				this.dygraph.updateOptions({
 					file: newData,
@@ -103,12 +103,13 @@ export class DygraphCompenent implements AfterViewInit {
 		var newData: [Date, number][] = [ [new Date(data[0][0]), data[0][1]] ];
 		if(spliceDist != undefined){
 			for(var i = 1; i < data.length; i++){
-				if(data[i][0] - data[i - 1][0] >= spliceDist){
+				//No more holes in data!!!
+				/*if(data[i][0] - data[i - 1][0] >= spliceDist){
 					//this.data.splice(i, 0, [this.data[i-1][0] + 1, NaN], [this.data[i][0]-1, NaN]);
 					//i += 2; //skip those 2 that were just inserted
 					newData.push([new Date(data[i-1][0] + 1), NaN]);
 					newData.push([new Date(data[i][0] - 1), NaN]);
-				}
+				}*/
 				newData.push([new Date(data[i][0]), data[i][1]]);
 			}
 		}
