@@ -21,20 +21,28 @@ tempData.get('/records', (req: Request, res: Response) => {
 	if(req.query.oldest && req.query.oldest > 0){
 		oldestDate = req.query.oldest;
 	}
-	//console.log(oldestDate);
+	var newestDate = (new Date()).getTime();
+	if(req.query.newest && req.query.newest > 0){
+		newestDate = req.query.newest;
+	}
 
+
+	var minStep = (newestDate - oldestDate)/100 //at most return 100 items
 
 	connection.connect();
 
 	connection.query(`
-		SELECT temp, measurement_time as time
+		SET @tmp := 0;
+		SELECT temp, (@tmp := measurement_time) as time
 		FROM birdRecords.temp_info
-		WHERE measurement_time > ${oldestDate}
-		ORDER BY measurement_time`, function (err, rows, fields) {
+		WHERE
+			measurement_time > ${oldestDate} AND measurement_time < ${newestDate}
+			AND (measurement_time - @tmp) >= ${minStep}
+		ORDER BY time`, function (err, result, fields) {
 		if (err){
 			res.json({error: err});
 		}else{
-			res.json(rows);
+			res.json(result[1]);
 		}
 	});
 	connection.end();

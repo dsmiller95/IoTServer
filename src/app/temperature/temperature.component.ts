@@ -7,6 +7,8 @@ import { Observable } from 'rxjs/Rx';
 
 import { REFRESH_TEMPS, NEW_TEMPS } from '../store/temp/temp.actions';
 
+import { ITemp, tempReducer } from '../store/temp/temp.reducer';
+
 @Component({
   selector: 'app-temperature',
   templateUrl: 'temperature.component.html'
@@ -23,18 +25,23 @@ export class TemperatureComponent {
 
 	constructor(private http: Http, private store: Store<{}>){
 		this.temps = store.select('temps') as Observable<[{time: number, temp:number}]>;
-
+		
 		this.temps.subscribe((value) => {
-			if(value.length <= 0){
+			/*if(value.length <= 0){
 				value.push({time: 0, temp: 0});
 			}
 			/*while(this.tempData.length > 0){
 				this.tempData.pop();
 			}*/
 
+			//console.log(value);
+
 			var data = [];
 			for(var i = 0; i < value.length; i++){
 				data.push([value[i].time, value[i].temp]);
+			}
+			if(data.length == 0){
+				data.push([0, 0]);
 			}
 			this.tempData = data;
 		});
@@ -55,12 +62,13 @@ export class TemperatureComponent {
 	}
 
 	public graphZoomed(event: {minDate: number, maxDate: number, ranges: number[][]}){
-		console.log(event);
+		//console.log(event);
 
 		this.store.dispatch({
 			type: NEW_TEMPS,
 			payload: {
-				oldest: event.minDate
+				oldest: event.minDate,
+				newest: event.maxDate
 			}
 		});
 	}

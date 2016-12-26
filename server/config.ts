@@ -6,7 +6,8 @@ export const digest = 'sha256';
 export const connectionObj = {
 		host: 'localhost',
 		user: 'default',
-		password: 'secret'
+		password: 'secret',
+		multipleStatements: true
 	};
 
 export const mqttServers = [

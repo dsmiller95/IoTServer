@@ -45,11 +45,12 @@ export class DygraphCompenent implements AfterViewInit {
 		if('data' in changes){
 			if(this.dygraph){
 				var newData = this.convertToDates(this.data, this.maximumSpace);
-
+				
 				var t = new Date();
 				this.dygraph.updateOptions({
 					file: newData,
 					//dataWindow: [t.getTime() - this.timeRange, t.getTime()]
+					isZoomedIgnoreProgrammaticZoom: true,
 				});
 			}
 		}
@@ -75,7 +76,6 @@ export class DygraphCompenent implements AfterViewInit {
 				//showRoller: true,
 				xlabel: '<br/><br/>Time',
 				dateWindow: [t.getTime() - this.timeRange, t.getTime()],
-				isZoomedIgnoreProgrammaticZoom: true,
 				rightGap: 20,
 				axes: {
 					x: {
